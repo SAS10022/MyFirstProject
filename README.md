@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MyFirstProject - Web API
 
 ASP.NET Core Web API with Product and Customer management.
@@ -41,3 +42,6 @@ Then test the API at https://localhost:5001 or http://localhost:5000
 ```bash
 curl -X GET http://localhost:5000/products
 ```
+=======
+
+>>>>>>> 113dcb09b803aedf6059d3e573205057b7cc2ccc
