@@ -4,7 +4,9 @@ using MyFirstProject.Models;
 
 namespace MyFirstProject.Controllers
 {
-    public class CustomerController : Controller
+    [Route("customers")]
+    [ApiController]
+    public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
 
@@ -13,41 +15,36 @@ namespace MyFirstProject.Controllers
             _customerService = customerService;
         }
 
-        // GET: Customer/Index - List all customers
-        public IActionResult Index()
+        // GET: /customers - Get all customers
+        [HttpGet]
+        public IActionResult GetAllCustomers()
         {
             var customers = _customerService.GetAll();
-            return View(customers);
+            return Ok(customers);
         }
 
-        // GET: Customer/Details/5 - View customer details
-        public IActionResult Details(int id)
+        // GET: /customers/{id} - Get customer by ID
+        [HttpGet("{id}")]
+        public IActionResult GetCustomerById(int id)
         {
             var customer = _customerService.GetById(id);
             if (customer == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return Ok(customer);
         }
 
-        // GET: Customer/Create - Show create form
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Customer/Create - Create new customer
+        // POST: /customers - Create new customer
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Customer customer)
+        public IActionResult CreateCustomer(Customer customer)
         {
             if (ModelState.IsValid)
             {
                 _customerService.Create(customer);
-                return RedirectToAction(nameof(Index));
+                return Ok(new { message = "Customer created successfully", customer });
             }
-            return View(customer);
+            return BadRequest(ModelState);
         }
     }
 }

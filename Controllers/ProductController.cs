@@ -4,7 +4,9 @@ using MyFirstProject.Models;
 
 namespace MyFirstProject.Controllers
 {
-    public class ProductController : Controller
+    [Route("products")]
+    [ApiController]
+    public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
 
@@ -13,41 +15,36 @@ namespace MyFirstProject.Controllers
             _productService = productService;
         }
 
-        // GET: Product/Index - List all products
-        public IActionResult Index()
+        // GET: /products - Get all products
+        [HttpGet]
+        public IActionResult GetAllProducts()
         {
             var products = _productService.GetAll();
-            return View(products);
+            return Ok(products);
         }
 
-        // GET: Product/Details/5 - View product details
-        public IActionResult Details(int id)
+        // GET: /products/{id} - Get product by ID
+        [HttpGet("{id}")]
+        public IActionResult GetProductById(int id)
         {
             var product = _productService.GetById(id);
             if (product == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return Ok(product);
         }
 
-        // GET: Product/Create - Show create form
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Product/Create - Create new product
+        // POST: /products - Create new product
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Product product)
+        public IActionResult CreateProduct(Product product)
         {
             if (ModelState.IsValid)
             {
                 _productService.Create(product);
-                return RedirectToAction(nameof(Index));
+                return Ok(new { message = "Product created successfully", product });
             }
-            return View(product);
+            return BadRequest(ModelState);
         }
     }
 }

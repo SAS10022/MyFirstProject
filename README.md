@@ -1,19 +1,31 @@
-# MyFirstProject
+# MyFirstProject - Web API
 
-ASP.NET Core MVC application with Product and Customer management.
+ASP.NET Core Web API with Product and Customer management.
 
 ## Features
 
-- Product Management (List, Details, Create)
-- Customer Management (List, Details, Create)
+- Product Management API (GetAll, GetById, Create)
+- Customer Management API (GetAll, GetById, Create)
 - Dependency Injection with Service Interfaces
-- Bootstrap UI
+- RESTful API endpoints
 
 ## Technologies
 
 - .NET 9.0
-- ASP.NET Core MVC
+- ASP.NET Core Web API
 - C#
+
+## API Endpoints
+
+### Products
+- `GET /products` - Get all products
+- `GET /products/{id}` - Get product by ID
+- `POST /products` - Create new product
+
+### Customers
+- `GET /customers` - Get all customers
+- `GET /customers/{id}` - Get customer by ID
+- `POST /customers` - Create new customer
 
 ## Running the Application
 
@@ -22,4 +34,10 @@ dotnet build
 dotnet run
 ```
 
-Then navigate to https://localhost:5001 or http://localhost:5000
+Then test the API at https://localhost:5001 or http://localhost:5000
+
+## Example Request
+
+```bash
+curl -X GET http://localhost:5000/products
+```
